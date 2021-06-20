@@ -35,6 +35,7 @@
           <td><?php echo $data['nama']?></td>
           <td>
             <a href="editAdmin.php?id=<?php echo $data['kode_admin'] ;?>&aksi=edit" class="btn btn-edit">Edit</a>
+            <a href="../includes/prosesAdmin.php?id=<?php echo $data['kode_admin'];?>&aksi=hapus" onclick="return confirm('Hapus Data?')" class="btn btn-danger">Hapus</a>
           </td>
       </tr>
     <?php

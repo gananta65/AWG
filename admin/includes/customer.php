@@ -30,6 +30,7 @@
             $query = mysqli_query($this->koneksi, $sql);
             if($query){
                 $_SESSION['customer'] = $kode;
+                $_SESSION['nama']     = $nama;
                 echo "<script>alert('Berhasil Menambahkan Data');window.location.href='../../index.php';</script>";
             } else{
                 echo "<script>alert('Gagal Menambahkan Data');</script>";

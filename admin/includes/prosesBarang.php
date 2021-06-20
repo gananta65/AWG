@@ -39,11 +39,9 @@
         $lokasi = htmlspecialchars($_POST['lokasi']);
         $barang->updateBarang($kode_barang, $nama, $merk, $kategori, $deskripsi,$harga,$stok,$lokasi);
 
-    }
-
-    else if($aksi == "hapus"){
-        $id_inventaris = $_GET['id'];
-        $inventaris->hapusInventaris($id_inventaris);
+    }else if($aksi == "hapus"){
+        $kode = $_GET['id'];
+        $barang->hapus($kode);
     }
     else if($aksi == "tambahgambar"){
         $kode       = $_POST['kode'];

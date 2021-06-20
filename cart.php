@@ -19,7 +19,7 @@
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" action="#">
+                            <form method="post" action="admin/includes/prosesKeranjang.php?aksi=cart">
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
@@ -32,12 +32,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php foreach ($keranjang->tampil($_SESSION['customer']) as $data) {
+                                    <?php 
+                                    if($jumlah['jml'] == 0){
+                                    ?><td colspan='6'><center>No Products!</center></td>
+                                    <?php
+                                    }else{
+                                    foreach ($keranjang->tampil($_SESSION['customer']) as $data) {
                                         $gbr = $gambar->tampil1Gambar($data['kode_barang']);
                                     ?>
                                         <tr class="cart_item">
                                             <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
+                                                <a title="Remove this item" class="remove" onclick="return confirm('Delete <?php echo $data['nama'];?>?')" href="admin/includes/prosesKeranjang.php?id=<?php echo $data['kode_barang'];?>&aksi=hapus">×</a> 
                                             </td>
 
                                             <td class="product-thumbnail">
@@ -58,14 +63,15 @@
 
                                             <td class="product-quantity">
                                                 <div class="quantity buttons_added">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="<?php echo $data['jumlah'];?>" min="0" step="1">
+                                                    <input type="text" name="kode_barang[]" value="<?php echo $data['kode_barang'];?>" hidden>
+                                                    <input type="number" size="4" name="jumlah[]" class="input-text qty text" title="Qty" value="<?php echo $data['jumlah'];?>" min="0" step="1">
                                                 </div>
                                             </td>
 
                                             <td class="product-subtotal">
                                                 <span class="amount"><?php echo $barang->rupiah($data['subtotal']);?></span> 
                                             </td>
-                                        <?php }?>
+                                        <?php }}?>
                                         </tr>
                                         <tr>
                                             <td class="actions" colspan="6">
@@ -113,7 +119,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>&copy; 2021 AWG Electronics. All Rights Reserved. <a href="index.html" target="_blank">AWG-electronics.com</a></p>
+                        <p>&copy; 2021 AWG Electronics. All Rights Reserved. <a href="">AWG-electronics.com</a></p>
                     </div>
                 </div>
                 

@@ -20,5 +20,8 @@
               $jk             = htmlspecialchars($_POST['jenis_kelamin']);
               $no_telp        = htmlspecialchars($_POST['no_telp']);
               $admin->update($kode,$email,$nama,$password,$jk,$no_telp);
+       }else if($aksi == "hapus"){
+              $kode = $_GET['id'];
+              $admin->hapus($kode);
        }
 ?>

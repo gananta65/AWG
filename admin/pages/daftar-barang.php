@@ -46,7 +46,8 @@
           <td><?php echo $data['stok']?></td>
           <td><?php echo $data['tgl_perubahan']?></td>
           <td>
-            <a href="editBarang.php?id=<?php echo $data['kode_barang'] ;?>&aksi=edit" class="btn btn-edit">Edit</a>
+            <a href="editBarang.php?id=<?php echo $data['kode_barang'];?>&aksi=edit" class="btn btn-edit">Edit</a>
+            <a href="../includes/prosesBarang.php?id=<?php echo $data['kode_barang'];?>&aksi=hapus" onclick="return confirm('Hapus Data?')" class="btn btn-danger">Hapus</a>
           </td>
       </tr>
     <?php

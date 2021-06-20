@@ -7,6 +7,8 @@
     $barang = new barang();
     $rp = new barang();
     $gambar = new barang();
+    $merk = new barang();
+    $searchmerk = new barang();
     if (isset($_SESSION['customer'])) {
         $keranjang = new keranjang();
         $jumlah = $keranjang->jumlahBarang($_SESSION['customer']);
@@ -107,7 +109,7 @@
         <div class="container">
             <div class="row">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -116,18 +118,31 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.php">Home</a></li>
+                        <li><a href="index.php">Home</a></li>
                         <li><a href="shop.php">Products</a></li>
                         <li>
                             <div class="form-inline">
+                            <form action="shop.php" method="get">
                                 <div class="input-group" data-widget="sidebar-search">
-                                  <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                                  <input class="form-control form-control-sidebar" type="search" placeholder="Search" name="barang" aria-label="Search">
+                                  <select class="selectpicker form-control" data-live-search="true" name="brand">
+                                    <option value="" selected></option>
+                                    <?php foreach ($searchmerk->tampilMerk() as $data ) {
+                                    ?>
+                                    <option value="<?php echo $data['kode_merk'];?>"><?php echo $data['merk'];?></option>
+                                    <?php }?>
+                                </select>
                                   <div class="input-group-append">
-                                    <button class="btn btn-sidebar">
+                                    <button type="submit" name class="btn btn-sidebar">
                                       <i class="fas fa-search fa-fw"></i>
                                     </button>
                                   </div>
                                 </div>
+                                <div class="input-group" data-widget="sidebar-search">
+                                  <div class="input-group-append">
+                                  </div>
+                                </div>
+                                </form>
                               </div>
                         </li>
                         <!-- <li><a href="single-product.html">Single product</a></li>

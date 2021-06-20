@@ -18,7 +18,16 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-            <?php foreach ($barang->tampil() as $data) {
+            <?php 
+                if(isset($_GET['barang'])){
+                    $tampil = $barang->search($_GET['barang'],$_GET['brand']);
+                }else if(isset($_GET['brand'])){
+                    $tampil = $barang->search('',$_GET['brand']);
+                }
+                if($tampil == false){
+                    echo "No Data!";
+                }else{
+                foreach ($tampil as $data) {
                 $gbr = $gambar->tampil1Gambar($data['kode_barang']);
              ?>
                 <div class="col-md-3 col-sm-6">
@@ -40,7 +49,7 @@
                         </div>                       
                     </div>
                  </div>    
-                 <?php }?>         
+                 <?php }}?>         
                     </div>    
                 </div>
             </div>

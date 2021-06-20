@@ -64,4 +64,25 @@
                 }
                 return $data;
             }
+            public function hapus($id,$kode_customer){
+                $sql = "DELETE FROM tb_keranjang where kode_barang = '$id' AND kode_customer ='$kode_customer'";
+                $query = mysqli_query($this->koneksi, $sql);
+                if($query){
+                    echo "<script>alert('Berhasil Menghapus Data');window.location.href='../../cart.php';</script>";
+                    exit();
+                } else{
+                    echo "<script>alert('Gagal Menghapus Data');</script>";
+                    echo mysqli_error($this->koneksi);
+                    echo $kode_barang;
+                    exit();
+                }
+            }
+            public function hapusArray($id,$kode_customer){
+                $sql = "DELETE FROM tb_keranjang where kode_barang = '$id' AND kode_customer ='$kode_customer'";
+                mysqli_query($this->koneksi, $sql);
+            }
+            public function updateArray($kode_barang,$jumlah,$kode_customer){
+                $sql = "CALL SPupdateKeranjang('$jumlah','$kode_barang','$kode_customer')";
+                mysqli_query($this->koneksi, $sql);
+            }
 }

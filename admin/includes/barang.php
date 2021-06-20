@@ -16,6 +16,18 @@
             }
             return $data;
         }
+        public function search($nama,$kode_brand){
+            $sql = "SELECT * from tb_barang where nama LIKE '%$nama%' AND kode_merk = '$kode_brand'";
+            $query = mysqli_query($this->koneksi, $sql);
+            if(mysqli_num_rows($query) > 0){
+                while($d = mysqli_fetch_assoc($query)){
+                    $data[] = $d;
+                }
+                return $data;
+            }else{
+                return false;
+            }
+        }
         public function tampilMerk(){
             $sql = "CALL SPtampilMerk()";
             $query = mysqli_query($this->koneksi, $sql);
@@ -121,6 +133,19 @@
                 echo "<script>alert('Gagal Menghapus Data');</script>";
                 echo mysqli_error($this->koneksi);
                 echo $kode_barang;
+                exit();
+            }
+        }
+        public function hapus($kode){
+            $sql = "Delete from tb_barang where kode_barang='$kode'";
+            $query = mysqli_query($this->koneksi,$sql);
+            if($query){
+                echo "<script>alert('Berhasil Menghapus Data');window.location.href='../pages/daftar-barang.php';</script>";
+                exit();
+            } else{
+                echo "<script>alert('Gagal Menghapus Data');</script>";
+                echo mysqli_error($this->koneksi);
+                echo $kode;
                 exit();
             }
         }

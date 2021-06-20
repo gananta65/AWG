@@ -69,4 +69,18 @@
                 exit();
             }
         }
+        public function hapus($kode){
+            $sql = "Delete from tb_admin where kode_admin='$kode'";
+            $query = mysqli_query($this->koneksi,$sql);
+            if($query){
+                echo "<script>alert('Berhasil Menghapus Data');window.location.href='../pages/daftar-admin.php';</script>";
+                exit();
+            } else{
+                echo "<script>alert('Gagal Menghapus Data');</script>";
+                echo mysqli_error($this->koneksi);
+                echo $kode;
+                exit();
+            }
+        }
+        
     }
