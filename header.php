@@ -2,7 +2,9 @@
     require_once("admin/includes/barang.php");
     require_once("admin/includes/customer.php");
     require_once("admin/includes/keranjang.php");
+    require_once("admin/includes/transaksi.php");
     session_start();
+    $transaksi = new transaksi();
     $customer = new customer();
     $barang = new barang();
     $rp = new barang();
@@ -25,7 +27,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home - AWG Electronics</title>
+    <title>AWG Electronics</title>
     
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -34,6 +36,7 @@
     <link rel = "icon" href = "/AWG/admin/assets/images/logo.png" type = "image">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -120,13 +123,16 @@
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Home</a></li>
                         <li><a href="shop.php">Products</a></li>
+                        <?php if(isset($_SESSION['customer'])){?>
+                            <li><a href="transaction.php">Tansaction</a></li>
+                        <?php }?>
                         <li>
                             <div class="form-inline">
                             <form action="shop.php" method="get">
                                 <div class="input-group" data-widget="sidebar-search">
                                   <input class="form-control form-control-sidebar" type="search" placeholder="Search" name="barang" aria-label="Search">
                                   <select class="selectpicker form-control" data-live-search="true" name="brand">
-                                    <option value="" selected></option>
+                                    <option value="" selected>Brands</option>
                                     <?php foreach ($searchmerk->tampilMerk() as $data ) {
                                     ?>
                                     <option value="<?php echo $data['kode_merk'];?>"><?php echo $data['merk'];?></option>

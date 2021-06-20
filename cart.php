@@ -64,6 +64,7 @@
                                             <td class="product-quantity">
                                                 <div class="quantity buttons_added">
                                                     <input type="text" name="kode_barang[]" value="<?php echo $data['kode_barang'];?>" hidden>
+                                                    <input type="number" name="total" value="<?php echo $total['total'];?>" hidden>
                                                     <input type="number" size="4" name="jumlah[]" class="input-text qty text" title="Qty" value="<?php echo $data['jumlah'];?>" min="0" step="1">
                                                 </div>
                                             </td>
