@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Jun 2021 pada 13.19
+-- Waktu pembuatan: 20 Jun 2021 pada 17.44
 -- Versi server: 10.4.6-MariaDB
 -- Versi PHP: 7.3.9
 
@@ -35,6 +35,12 @@ INSERT INTO tb_foto_barang VALUES(NULL, kode_barang, foto)$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SPtambahKeranjang` (IN `kode_brg` VARCHAR(20), IN `kode_cust` VARCHAR(20))  NO SQL
 Update tb_keranjang set jumlah=jumlah+1, subtotal=(SELECT harga FROM tb_barang WHERE kode_barang=kode_brg)*jumlah WHERE kode_customer = kode_cust and kode_barang=kode_brg$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPtambahKeranjangB` (IN `kode_brg` VARCHAR(20), IN `kode_cust` VARCHAR(20), IN `jml` INT)  NO SQL
+Update tb_keranjang set jumlah=jumlah+jml, subtotal=(SELECT harga FROM tb_barang WHERE kode_barang=kode_brg)*jumlah WHERE kode_customer = kode_cust and kode_barang=kode_brg$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPtambahTransaksi` (IN `kode_tr` VARCHAR(20), IN `kode_cust` VARCHAR(20), IN `tot` INT, IN `alm` TEXT, IN `jenis` VARCHAR(20), IN `stat` VARCHAR(20))  NO SQL
+INSERT INTO `tb_transaksi` (`id_transaksi`, `kode_transaksi`, `kode_customer`, `total`, `alamat`, `jenis_transaksi`, `tgl_transaksi`, `status_transaksi`) VALUES (NULL, kode_tr, kode_cust, tot, alm, jenis, current_timestamp(), stat)$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SPtampilBarang` ()  NO SQL
 SELECT tb_barang.*,tb_kategori.kategori,tb_merk.merk from tb_barang JOIN tb_merk ON tb_barang.kode_merk = tb_merk.kode_merk JOIN tb_kategori ON tb_barang.kode_kategori = tb_kategori.kode_kategori$$
 
@@ -52,6 +58,11 @@ Select tb_keranjang.*,tb_barang.nama,tb_barang.harga FROM tb_keranjang JOIN tb_b
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SPtampilMerk` ()  NO SQL
 SELECT * FROM tb_merk$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPtransferBarang` (IN `kode` VARCHAR(20), IN `kode_trx` VARCHAR(20))  NO SQL
+INSERT INTO tb_detail_transaksi (kode_barang,kode_transaksi,kode_customer,jumlah,subtotal)
+SELECT kode_barang,kode_trx,kode_customer,jumlah,subtotal
+FROM tb_keranjang WHERE tb_keranjang.kode_customer = kode$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SPupdateAdmin` (IN `kode` VARCHAR(20), IN `email_baru` VARCHAR(30), IN `pass` VARCHAR(100), IN `nama_baru` VARCHAR(50), IN `jk` VARCHAR(10), IN `no_hp` VARCHAR(20))  NO SQL
 UPDATE `tb_admin` SET `email` = email_baru, `password` = pass, `nama` = nama_baru, `jenis_kelamin` = jk, `no_telp` = no_hp WHERE `tb_admin`.`kode_admin` = kode$$
@@ -221,6 +232,31 @@ INSERT INTO `tb_cust_level` (`id_level`, `kode_level`, `level`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tb_detail_transaksi`
+--
+
+CREATE TABLE `tb_detail_transaksi` (
+  `id_keranjang` int(11) NOT NULL,
+  `kode_barang` varchar(20) NOT NULL,
+  `kode_transaksi` varchar(20) NOT NULL,
+  `kode_customer` varchar(20) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_detail_transaksi`
+--
+
+INSERT INTO `tb_detail_transaksi` (`id_keranjang`, `kode_barang`, `kode_transaksi`, `kode_customer`, `jumlah`, `subtotal`) VALUES
+(16, 'BRG005', 'TRX001', 'CUS002', 4, 2800000),
+(17, 'BRG001', 'TRX001', 'CUS002', 1, 13500000),
+(19, 'BRG005', 'TRX002', 'CUS002', 1, 700000),
+(20, 'BRG004', 'TRX003', 'CUS002', 1, 9998000);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tb_foto_barang`
 --
 
@@ -283,7 +319,8 @@ CREATE TABLE `tb_keranjang` (
 --
 
 INSERT INTO `tb_keranjang` (`id_keranjang`, `kode_barang`, `kode_customer`, `jumlah`, `subtotal`) VALUES
-(22, 'BRG004', 'CUS002', 1, 9998000);
+(29, 'BRG004', 'CUS001', 1, 9998000),
+(31, 'BRG004', 'CUS002', 1, 9998000);
 
 -- --------------------------------------------------------
 
@@ -337,6 +374,13 @@ CREATE TABLE `tb_shipping` (
   `no_resi` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `tb_shipping`
+--
+
+INSERT INTO `tb_shipping` (`id_shipping`, `kode_transaksi`, `nama_shipper`, `no_resi`) VALUES
+(1, 'TRX002', 'jne', 'dasdas');
+
 -- --------------------------------------------------------
 
 --
@@ -353,6 +397,15 @@ CREATE TABLE `tb_transaksi` (
   `tgl_transaksi` timestamp NOT NULL DEFAULT current_timestamp(),
   `status_transaksi` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_transaksi`
+--
+
+INSERT INTO `tb_transaksi` (`id_transaksi`, `kode_transaksi`, `kode_customer`, `total`, `alamat`, `jenis_transaksi`, `tgl_transaksi`, `status_transaksi`) VALUES
+(3, 'TRX001', 'CUS002', 16300000, 'Dalung', 'Transfer', '2021-06-20 14:17:45', 'Dibatalkan'),
+(4, 'TRX002', 'CUS002', 700000, 'Dalung', 'Transfer', '2021-06-20 14:18:40', 'Dikirim'),
+(5, 'TRX003', 'CUS002', 9998000, 'Dalung', 'Transfer', '2021-06-20 14:19:12', 'Menunggu Konfirmasi');
 
 -- --------------------------------------------------------
 
@@ -425,6 +478,13 @@ ALTER TABLE `tb_customer`
 ALTER TABLE `tb_cust_level`
   ADD PRIMARY KEY (`id_level`),
   ADD KEY `kode_level` (`kode_level`);
+
+--
+-- Indeks untuk tabel `tb_detail_transaksi`
+--
+ALTER TABLE `tb_detail_transaksi`
+  ADD PRIMARY KEY (`id_keranjang`),
+  ADD KEY `kode_barang` (`kode_barang`);
 
 --
 -- Indeks untuk tabel `tb_foto_barang`
@@ -532,6 +592,12 @@ ALTER TABLE `tb_cust_level`
   MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_detail_transaksi`
+--
+ALTER TABLE `tb_detail_transaksi`
+  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_foto_barang`
 --
 ALTER TABLE `tb_foto_barang`
@@ -547,7 +613,7 @@ ALTER TABLE `tb_kategori`
 -- AUTO_INCREMENT untuk tabel `tb_keranjang`
 --
 ALTER TABLE `tb_keranjang`
-  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_laporan`
@@ -565,13 +631,13 @@ ALTER TABLE `tb_merk`
 -- AUTO_INCREMENT untuk tabel `tb_shipping`
 --
 ALTER TABLE `tb_shipping`
-  MODIFY `id_shipping` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_shipping` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_ulasan`
