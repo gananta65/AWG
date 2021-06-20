@@ -21,11 +21,9 @@
 <html>
 <head>
   <title>Daftar Barang</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
-  <link rel = "icon" href = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png" type = "image/x-icon">
-  </head>
+  <?php include "../header.php";?>
+
+</head>
 <body>
 <?php include "sidebar.php"; ?>
 <div class="sidebar">
@@ -102,7 +100,14 @@
                 <label>Stok</label>
                 <input type="number" name="stok" id="stok" value="<?php echo $brg['stok'];?>">
                 <label>Deskripsi</label>
-                <textarea name="deskripsi" id="deskrisi"><?php echo $brg['deskripsi'];?></textarea>
+                <textarea name="deskripsi" id="deskrisi" rows="30"><?php echo $brg['deskripsi'];?></textarea>
+                <label>Lokasi</label>
+                <select name="lokasi" id="lokasi" class="selectpicker form-control" data-live-search="true" required>
+                <option value="<?php echo $brg['lokasi'];?>"><?php echo $brg['lokasi'];?></option>
+                  <option value="Kota Denpasar">Kota Denpasar</option>
+                  <option value="Kabupaten Gianyar">Kabupaten Gianyar</option>
+                  <option value="Kabupaten Buleleng">Kabupaten Buleleng</option>
+                </select>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

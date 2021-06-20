@@ -45,7 +45,13 @@
                 <label>Stok</label>
                 <input type="number" name="stok" id="stok" value="">
                 <label>Deskripsi</label>
-                <textarea name="deskripsi" id="deskrisi"></textarea>
+                <textarea name="deskripsi" id="deskrisi" rows="10"></textarea>
+                <label>Lokasi</label>
+                <select name="lokasi" id="lokasi" class="selectpicker form-control" data-live-search="true" required>>
+                  <option value="Kota Denpasar">Kota Denpasar</option>
+                  <option value="Kabupaten Gianyar">Kabupaten Gianyar</option>
+                  <option value="Kabupaten Buleleng">Kabupaten Buleleng</option>
+                </select>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

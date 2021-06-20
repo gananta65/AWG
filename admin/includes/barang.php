@@ -44,6 +44,16 @@
                 return false;
             }
         }
+        public function tampil1Gambar($id){
+            $sql = "select * from tb_foto_barang where kode_barang = '$id' LIMIT 1";
+            $query = mysqli_query($this->koneksi, $sql);
+            if(mysqli_num_rows($query) > 0){
+                $data = mysqli_fetch_assoc($query);
+                return $data;
+            }else{
+                return false;
+            }
+        }
         public function tampilJumlahBarang(){
             $sql = "Select COUNT(*) as total from tb_barang";
             $query = mysqli_query($this->koneksi, $sql);
@@ -51,6 +61,13 @@
                 $data[] = $d;
             }
             return $data;
+        }
+        public function cekHarga($kode){
+            $sql = "SELECT harga FROM tb_barang WHERE kode_barang ='$kode'";
+            $query = mysqli_query($this->koneksi, $sql);
+            $data = mysqli_fetch_array($query);
+            $harga = $data['harga'];
+            return $harga;
         }
         public function generateKodeBarang(){
             $sql = "SELECT max(kode_barang) as kodeTerbesar FROM tb_barang";
@@ -107,9 +124,9 @@
                 exit();
             }
         }
-        //Fungsi Menambahkan Data Inventaris    
-        public function tambahBarang($kode, $nama, $merk, $kategori, $deskripsi,$harga,$stok,$foto){
-            $sql = "INSERT INTO `tb_barang` (`kode_barang`, `kode_kategori`, `kode_merk`, `nama`, `deskripsi`, `harga`, `stok`, `tgl_perubahan`) VALUES ('$kode','$kategori','$merk','$nama','$deskripsi','$harga','$stok', current_timestamp())";
+         
+        public function tambahBarang($kode, $nama, $merk, $kategori, $deskripsi,$harga,$stok,$foto,$lokasi){
+            $sql = "INSERT INTO `tb_barang` (`kode_barang`, `kode_kategori`, `kode_merk`, `nama`, `deskripsi`, `harga`, `stok`, `lokasi`, `tgl_perubahan`) VALUES ('$kode','$kategori','$merk','$nama','$deskripsi','$harga','$stok', '$lokasi', current_timestamp())";
             $query = mysqli_query($this->koneksi, $sql);
             if($query){
                 $this->tambahFoto($kode,$foto);
@@ -121,8 +138,8 @@
                 exit();
             }
         }
-        public function updateBarang($kode, $nama, $merk, $kategori, $deskripsi,$harga,$stok){
-            $sql = "CALL SPupdateBarang('$kode','$nama','$merk','$kategori','$deskripsi','$harga','$stok')";
+        public function updateBarang($kode, $nama, $merk, $kategori, $deskripsi,$harga,$stok,$lokasi){
+            $sql = "CALL SPupdateBarang('$kode','$nama','$merk','$kategori','$deskripsi','$harga','$stok','$lokasi')";
             $query = mysqli_query($this->koneksi, $sql);
             if($query){
                 echo "<script>alert('Berhasil Mengubah Data');window.location.href='../pages/daftar-barang.php';</script>";
@@ -136,65 +153,8 @@
             }
         }
 
-        //Fungsi Menghapus Data Inventaris
-        public function hapusInventaris($id_inventaris){
-            $sql = "DELETE FROM inventaris WHERE id_inventaris='$id_inventaris'";
-            $query = mysqli_query($this->koneksi, $sql);
-            if($query){
-                echo "<script>alert('Berhasil Menghapus Data');window.location.href='../pages/inventaris.php';</script>";
-                exit();
-            } else{
-                echo "<script>alert('Gagal Menghapus Data');window.location.href='../pages/inventaris.php';</script>";
-                exit();
-            }
-        }
-
-        //Fungsi Mengedit Data Inventaris
         public function editBarang($kode_barang){
             $sql = "CALL SPtampilBarangID('$kode_barang')";
-            $query = mysqli_query($this->koneksi, $sql);
-            $data = mysqli_fetch_assoc($query);
-
-            return $data;
-        }
-
-        //Fungsi Mengupdate Data Inventaris
-        public function updateInventaris($id, $kode, $nama, $kondisi, $jumlah, $jenis, $tanggal, $ruang, $petugas, $keterangan){
-            $sql = "UPDATE inventaris SET kode_inventaris='$kode', nama='$nama', kondisi='$kondisi', jumlah='$jumlah', id_jenis='$jenis',
-            tanggal_register='$tanggal', id_ruang='$ruang', id_petugas='$petugas', keterangan='$keterangan' WHERE id_inventaris='$id'";
-            $query = mysqli_query($this->koneksi, $sql);
-            if($query){
-                echo "<script>alert('Berhasil Mengupdate Data');window.location.href='../pages/inventaris.php';</script>";
-                exit();
-            } else{
-                echo "<script>alert('Gagal Mengupdate Data');window.location.href='../pages/inventaris.php';</script>";
-                exit();
-            }
-        }
-
-        //Fungsi Mengambil Data Jenis
-        public function getJenis(){
-            $sql = "SELECT id_jenis, nama_jenis FROM jenis";
-            $query = mysqli_query($this->koneksi, $sql);
-            while($d = mysqli_fetch_assoc($query)){
-                $data[] = $d;
-            }
-            return $data;
-        }
-
-        //Fungsi Mengambil Data Ruang
-        public function getRuang(){
-            $sql = "SELECT id_ruang, nama_ruang FROM ruang";
-            $query = mysqli_query($this->koneksi, $sql);
-            while($d = mysqli_fetch_assoc($query)){
-                $data[] = $d;
-            }
-            return $data;
-        }
-
-        //Fungsi Mengambil Id Inventaris
-        public function getMaxIdInventaris(){
-            $sql = "SELECT MAX(id_inventaris)+1 as id FROM inventaris";
             $query = mysqli_query($this->koneksi, $sql);
             $data = mysqli_fetch_assoc($query);
 

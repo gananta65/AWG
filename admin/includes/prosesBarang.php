@@ -15,6 +15,7 @@
         $harga      = htmlspecialchars($_POST['harga']);
         $stok       = htmlspecialchars($_POST['stok']);
         $deskripsi  = htmlspecialchars($_POST['deskripsi']);
+        $lokasi = htmlspecialchars($_POST['lokasi']);
         // Gambar
         $gambar     = $_FILES['foto']['name'];
         $ekstensi_diperbolehkan	= array('png','jpg');
@@ -24,7 +25,7 @@
         $file_tmp   = $_FILES['foto']['tmp_name'];
         $format_gambar = $kode_barang.' - '.$gambar;		
 		move_uploaded_file($file_tmp, '../../Gambar/'.$format_gambar);
-        $barang->tambahBarang($kode_barang, $nama, $merk, $kategori, $deskripsi,$harga,$stok,$format_gambar);
+        $barang->tambahBarang($kode_barang, $nama, $merk, $kategori, $deskripsi,$harga,$stok,$format_gambar,$lokasi);
 
     }
     else if($aksi == "update"){ 
@@ -35,7 +36,8 @@
         $harga      = htmlspecialchars($_POST['harga']);
         $stok       = htmlspecialchars($_POST['stok']);
         $deskripsi  = htmlspecialchars($_POST['deskripsi']);
-        $barang->updateBarang($kode_barang, $nama, $merk, $kategori, $deskripsi,$harga,$stok);
+        $lokasi = htmlspecialchars($_POST['lokasi']);
+        $barang->updateBarang($kode_barang, $nama, $merk, $kategori, $deskripsi,$harga,$stok,$lokasi);
 
     }
 
