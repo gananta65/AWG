@@ -3,6 +3,10 @@
     require_once('keranjang.php');
     require_once('barang.php');
     require_once('database.php');
+    require_once('transaksi.php');
+    require_once('customer.php');
+    $customer = new customer();
+    $transaksi = new transaksi();
     $db = new database();
     $keranjang = new keranjang();
     $barang    = new barang();
@@ -18,6 +22,15 @@
                 $keranjang->tambah($id,$kode_customer,'1',$harga);
             }else{
                 $keranjang->tambahJumlah($id,$kode_customer);
+            }
+        }else if($aksi == "tambahBanyak"){
+            $id     = $_POST['kode_barang'];
+            $jumlah = $_POST['jumlah'];
+            $harga = $barang->cekHarga($id,$jumlah);
+            if($keranjang->cekBarang($id,$kode_customer) == false){
+                $keranjang->tambah($id,$kode_customer,$jumlah,$harga);
+            }else{
+                $keranjang->tambahJumlahB($id,$kode_customer,$jumlah);
             }
         }
         else if($aksi == "hapus"){
@@ -35,7 +48,12 @@
                 }
                 echo "<script>alert('Berhasil Mengubah Data');window.location.href='../../cart.php';</script>";
             }else{
-
+                $kode_transaksi = $transaksi->generateKodeTransaksi();
+                $total          = $_POST['total'];
+                $alamat         = $customer->getAlamat($kode_customer);
+                $jenis          = "Transfer";
+                $status         = "Menunggu Konfirmasi";
+                $transaksi->tambah($kode_transaksi,$kode_customer,$total,$alamat,$jenis,$status);
             }
         }
     }else{

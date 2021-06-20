@@ -1,19 +1,19 @@
 <?php
-  // require_once("../includes/inventaris.php");
+  require_once("../includes/transaksi.php");
+  require_once("../includes/barang.php");
 
-  // $inventaris = new inventaris();
-  // $id = $inventaris->getMaxIdInventaris();
+  session_start();
 
-  // session_start();
-
-  // if(! $_SESSION['login']){
-  //     header('Location: ../login.php');
-  // }
+  if(! $_SESSION['login']){
+      header('Location: ../login.php');
+  }
+  $transaksi = new transaksi();
+  $barang = new barang();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Orderan</title>
+  <title>Pengiriman</title>
   <?php include "../header.php";?>
 </head>
 <body>
@@ -22,23 +22,25 @@
   <h2>Daftar Pengiriman</h2>
     <table class="table">
       <tr>
-        <th>No. Resi</th>
         <th>Kode Transaksi</th>
         <th>Nama Customer</th>
         <th>Total Belanja</th>
-        <th>Status Pengiriman</th>
-        <th>Aksi</th>
+        <th>Status Transaksi</th>
       </tr>
+      <?php 
+            if($transaksi->tampilDikirim() == False){
+                ?><td colspan='5'><center>Belum ada Transaksi!</center></td>
+                <?php
+                }else{
+                foreach ($transaksi->tampilDikirim() as $data) {
+                ?>
       <tr>
-          <td></td>
-          <td></td>
-          <td></td>   
-          <td></td> 
-          <td></td>       
-          <td>
-            <a href="editInventaris.php?id=<?php echo $data['id_inventaris'] ;?>&aksi=edit" class="btn btn-primary">Lihat Orderan</a>
-          </td>
+          <td><?php echo $data['kode_transaksi'];?></td>
+          <td><?php echo $data['nama'];?></td>
+          <td><?php echo $barang->rupiah($data['total']);?></td>  
+          <td><?php echo $data['status_transaksi'];?></td>
       </tr>
+      <?php }}?>
     </table>
 </div>
 

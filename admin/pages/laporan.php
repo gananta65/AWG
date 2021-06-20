@@ -1,3 +1,16 @@
+<?php
+  require_once("../includes/transaksi.php");
+  require_once("../includes/barang.php");
+
+  session_start();
+
+  if(! $_SESSION['login']){
+      header('Location: ../login.php');
+  }
+  $transaksi = new transaksi();
+  $barang = new barang();
+?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Laporan</title>
@@ -27,15 +40,24 @@
                     <th>Total</th>
                     <th>Status Transaksi</th>
                 </tr>
+                <?php 
+                if($transaksi->tampilAll() == False){
+                ?><td colspan='6'><center>Tidak ada Transaksi!</center></td>
+                    <?php
+                }else{
+                    $no = 1;
+                    foreach ($transaksi->tampilAll() as $data) {
+                    
+                ?>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><?php echo $no++;?></td>
+                    <td><?php echo $data['kode_transaksi'];?></td>
+                    <td><?php echo $data['tgl_transaksi'];?></td>
+                    <td><?php echo $data['nama'];?></td>
+                    <td><?php echo $data['total'];?></td>
+                    <td><?php echo $data['status_transaksi'];?></td>
                 </tr>
-
+                <?php }}?>
             </table>
         </div>
         <br>        

@@ -17,7 +17,7 @@
             return $data;
         }
         public function search($nama,$kode_brand){
-            $sql = "SELECT * from tb_barang where nama LIKE '%$nama%' AND kode_merk = '$kode_brand'";
+            $sql = "SELECT * from tb_barang where nama LIKE '%$nama%' AND kode_merk like '%$kode_brand%'";
             $query = mysqli_query($this->koneksi, $sql);
             if(mysqli_num_rows($query) > 0){
                 while($d = mysqli_fetch_assoc($query)){

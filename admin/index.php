@@ -5,7 +5,10 @@
       header('Location: login.php');
   }
   require_once("includes/barang.php");
+  require_once("includes/transaksi.php");
   $barang = new barang();
+  $transaksi = new transaksi();
+  $pengiriman = new transaksi();
 ?>
 <html>
 <head>
@@ -26,8 +29,8 @@
             </p>
         </h1>
         <a href="pages/daftar-barang.php" class="btn btn-outline-danger btn-block"><h1><?php foreach ($barang->tampilJumlahBarang() as $data){echo $data['total'];} ?></h1>Barang</a>
-            <a href="pages/orderan.php" class="btn btn-outline-secondary btn-block"><h1>0</h1>Orderan Menunggu</a>
-            <a href="pages/pengiriman.php" class="btn btn-outline-primary btn-block"><h1>0</h1>Pengiriman Berlangsung</a>
+            <a href="pages/orderan.php" class="btn btn-outline-secondary btn-block"><h1><?php foreach ($transaksi->tampilJumlahTransaksiMenunggu() as $data){echo $data['total'];} ?></h1>Orderan Menunggu</a>
+            <a href="pages/pengiriman.php" class="btn btn-outline-primary btn-block"><h1><?php foreach ($pengiriman->tampilJumlahTransaksiDikirim() as $data){echo $data['total'];} ?></h1>Pengiriman Berlangsung</a>
         </div>
         </div>
     </div>

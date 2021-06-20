@@ -19,10 +19,15 @@
         <div class="container">
             <div class="row">
             <?php 
+                if(!isset($_GET['brand'])){
+                    $brand='';
+                }else{
+                    $brand= $_GET['brand'];
+                }
                 if(isset($_GET['barang'])){
-                    $tampil = $barang->search($_GET['barang'],$_GET['brand']);
-                }else if(isset($_GET['brand'])){
-                    $tampil = $barang->search('',$_GET['brand']);
+                    $tampil = $barang->search($_GET['barang'],$brand);
+                }else{
+                    $tampil = $barang->tampil();
                 }
                 if($tampil == false){
                     echo "No Data!";
@@ -35,7 +40,7 @@
                         <div class="product-upper">
                             <img style="height: 200px;" src="Gambar/<?php echo $gbr['foto'] ?>" alt="">
                         </div>
-                        <h2><a href="" style="display: block;
+                        <h2><a href="product.php?id=<?php echo $data['kode_barang'];?>" style="display: block;
   width: 200px;
   overflow: hidden;
   white-space: nowrap;

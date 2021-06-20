@@ -9,6 +9,14 @@
 
             return $data;
         }
+        public function getAlamat($kode){
+            $sql = "Select alamat from tb_customer where kode_customer = '$kode'";
+            $query = mysqli_query($this->koneksi, $sql);
+            $data = mysqli_fetch_assoc($query);
+            $hasil = $data['alamat'];
+            return $hasil;
+        }
+        
         public function generateKodeCustomer(){
             $sql = "SELECT max(kode_customer) as kodeTerbesar FROM tb_customer";
             $query = mysqli_query($this->koneksi, $sql);

@@ -56,6 +56,19 @@
                     exit();
                 }   
             }
+            public function tambahJumlahB($kode_barang,$kode_customer,$jumlah){
+                $sql = "CALL SPtambahKeranjangB('$kode_barang','$kode_customer','$jumlah')";
+                $query = mysqli_query($this->koneksi, $sql);
+                    if($query){
+                        echo "<script>alert('Berhasil Menambahkan ke Keranjang');window.location.href='../../shop.php';</script>";
+                        exit();
+                    } else{
+                        echo "<script>alert('Gagal Menambahkan ke Keranjang');</script>";
+                        echo mysqli_error($this->koneksi);
+                        echo $kode_barang;
+                        exit();
+                    }   
+                }
             public function tampil($kode){
                 $sql = "CALL SPtampilKeranjang('$kode')";
                 $query = mysqli_query($this->koneksi, $sql);
