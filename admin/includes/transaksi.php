@@ -118,6 +118,18 @@
                 return false;
             }
         }
+        public function tampilDetailCust($id,$kode_customer){
+            $sql = "SELECT tb_detail_transaksi.*,tb_barang.nama from tb_detail_transaksi JOIN tb_barang ON tb_detail_transaksi.kode_barang = tb_barang.kode_barang where kode_transaksi = '$id' AND kode_customer = '$kode_customer'";
+            $query = mysqli_query($this->koneksi, $sql);
+            if(mysqli_num_rows($query) > 0){
+                while($d = mysqli_fetch_assoc($query)){
+                    $data[] = $d;
+                }
+                return $data;
+            }else{
+                return false;
+            }
+        }
         public function batal($id){
             $sql = "UPDATE tb_transaksi SET status_transaksi = 'Dibatalkan' WHERE kode_transaksi='$id'";
             $query = mysqli_query($this->koneksi, $sql);
@@ -153,6 +165,18 @@
                 echo mysqli_error($this->koneksi);
                 echo $kode_transaksi;
                 exit();
+            }
+        }
+        public function tampilBayarTertinggi(){
+            $sql = "SELECT a.kode_transaksi,a.total,a.tgl_transaksi,a.status_transaksi,b.nama from tb_transaksi a JOIN tb_customer b on a.kode_customer = b.kode_customer ORDER BY total DESC LIMIT 2";
+            $query = mysqli_query($this->koneksi, $sql);
+            if(mysqli_num_rows($query) > 0){
+                while($d = mysqli_fetch_assoc($query)){
+                    $data[] = $d;
+                }
+                return $data;
+            }else{
+                return false;
             }
         }
 }

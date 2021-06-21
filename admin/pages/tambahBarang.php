@@ -13,13 +13,13 @@
                 <input type="hidden" name="id_inventaris" value="">
                 <label>Foto Barang</label>
                 <br>
-                <input type="file" name="foto" onchange="PreviewImage();">
+                <input type="file" name="foto" onchange="PreviewImage();" required>
                 <br>
                 <br>
                 <label>Nama Barang</label>
-                <input type="text" name="nama_barang" id="nama_barang">
+                <input type="text" name="nama_barang" id="nama_barang" required>
                 <label>Merk</label>
-                <select name="merk" id="merk" class="selectpicker form-control" data-live-search="true" style="width:50%;">
+                <select name="merk" id="merk" class="selectpicker form-control" data-live-search="true" style="width:50%;" required>
                 <option value="">pilih</option>
                 <?php
                   foreach($merk->tampilMerk() as $data) {
@@ -30,7 +30,7 @@
                 ?>
                 </select>
                 <label>Kategori</label>
-                <select name="kategori" id="kategori" class="selectpicker form-control" data-live-search="true">
+                <select name="kategori" id="kategori" class="selectpicker form-control" data-live-search="true" required>
                 <option value="">pilih</option>
                 <?php
                   foreach($kategori->tampilKategori() as $data) {
@@ -41,11 +41,11 @@
                 ?>
                 </select>
                 <label>Harga</label>
-                <input type="number" name="harga" id="harga" value="">
+                <input type="number" name="harga" id="harga" value="" required>
                 <label>Stok</label>
-                <input type="number" name="stok" id="stok" value="">
+                <input type="number" name="stok" id="stok" value="" required>
                 <label>Deskripsi</label>
-                <textarea name="deskripsi" id="deskrisi" rows="10"></textarea>
+                <textarea name="deskripsi" id="deskrisi" rows="10" required></textarea>
                 <label>Lokasi</label>
                 <select name="lokasi" id="lokasi" class="selectpicker form-control" data-live-search="true" required>>
                   <option value="Kota Denpasar">Kota Denpasar</option>

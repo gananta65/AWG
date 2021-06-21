@@ -6,5 +6,6 @@
         <li><a href="/AWG/admin/pages/pengiriman.php">Pengiriman</a></li>
         <li><a href="/AWG/admin/pages/laporan.php">Laporan</a></li>
         <li><a href="/AWG/admin/pages/daftar-admin.php">Admin</a></li>
+        <li><a href="/AWG/admin/pages/uas.php">UAS</a></li>
         <li><a href="/AWG/admin/includes/prosesLogout.php" onclick="return confirm('Anda Ingin Logout?')">Logout</a></li>
     </ul>

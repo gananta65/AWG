@@ -20,7 +20,7 @@
 <?php include "sidebar.php"; ?>
     <div class="sidebar">
     <h1>Laporan</h1>
-        <form action="laporan.php" method="GET"></form>
+        <form  class="form" action="laporan.php" method="GET">
                 <label>Tanggal Awal</label>
                 <input type="date" name="tglawal"></input>
                 <label>Tanggal Akhir</label>
@@ -54,7 +54,7 @@
                     <td><?php echo $data['kode_transaksi'];?></td>
                     <td><?php echo $data['tgl_transaksi'];?></td>
                     <td><?php echo $data['nama'];?></td>
-                    <td><?php echo $data['total'];?></td>
+                    <td><?php echo $barang->rupiah($data['total']);?></td>
                     <td><?php echo $data['status_transaksi'];?></td>
                 </tr>
                 <?php }}?>

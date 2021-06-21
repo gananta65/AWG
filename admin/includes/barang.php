@@ -15,6 +15,17 @@
                 $data[] = $d;
             }
             return $data;
+        }public function stok0(){
+            $sql = "SELECT tb_barang.*,tb_kategori.kategori,tb_merk.merk from tb_barang JOIN tb_merk ON tb_barang.kode_merk = tb_merk.kode_merk JOIN tb_kategori ON tb_barang.kode_kategori = tb_kategori.kode_kategori WHERE stok = 0";
+            $query = mysqli_query($this->koneksi, $sql);
+            if(mysqli_num_rows($query) > 0){
+                while($d = mysqli_fetch_assoc($query)){
+                    $data[] = $d;
+                }
+                return $data;
+            }else{
+                return false;
+            }
         }
         public function search($nama,$kode_brand){
             $sql = "SELECT * from tb_barang where nama LIKE '%$nama%' AND kode_merk like '%$kode_brand%'";

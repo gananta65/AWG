@@ -22,12 +22,12 @@
                         <form action="includes/prosesLogin.php" method="POST">
                             <label>Email</label>
                             <div class="input-group mb-3">
-                                <input type="text" name="username" class="form-control">
+                                <input type="text" name="username" class="form-control" required>
                             </div>
 
                             <label>Password</label>
                             <div class="input-group mb-3">
-                                <input type="password" name="password" class="form-control">
+                                <input type="password" name="password" class="form-control" required>
                             </div>
                             <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
                         </form>

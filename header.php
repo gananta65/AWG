@@ -124,7 +124,7 @@
                         <li><a href="index.php">Home</a></li>
                         <li><a href="shop.php">Products</a></li>
                         <?php if(isset($_SESSION['customer'])){?>
-                            <li><a href="transaction.php">Tansaction</a></li>
+                            <li><a href="transaction.php">Transaction</a></li>
                         <?php }?>
                         <li>
                             <div class="form-inline">

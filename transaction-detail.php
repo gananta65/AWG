@@ -1,4 +1,10 @@
 <?php include "header.php";
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+    }else{
+        $id = null;
+    }
+    
 ?>
 <br>
 <div class="container" aria-hidden="true">  
@@ -8,30 +14,34 @@
                 <h2 class="modal-title" id="exampleModalLongTitle"><b>Transaction Data</h2>
             </div>
             <div class="modal-body">
-            <table class="table">
-            <tr>
-                <th>Transaction Code</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            <?php 
-            if($transaksi->tampil($_SESSION['customer']) == False){
-                ?><td colspan='3'><center>No Transaction!</center></td>
-                <?php
-                }else{
-                foreach ($transaksi->tampil($_SESSION['customer']) as $data) {
-                ?>
-            <tr>
-                <td><?php echo $data['kode_transaksi'];?></td>
-                <td><?php echo $barang->rupiah($data['total']);?></td>
-                <td><?php echo $data['status_transaksi'];?></td>    
-                <td>
-                    <a href="transaction-detail.php?id=<?php echo $data['kode_transaksi'];?>" class="btn btn-primary">Details</a>
-                </td>
-            </tr>
-            <?php }}?>
-            </table>
+            <h2>Data Belanjaan</h2>
+  <?php 
+    if($transaksi->tampilDetailCust($id,$_SESSION['customer']) == False){
+        ?><h1><center>Belum ada Transaksi!</center></h1>
+        <?php
+        }else{
+        foreach ($transaksi->tampilDetailCust($id,$_SESSION['customer']) as $data) {
+          if ($gambar->tampil1Gambar($data['kode_barang']) == false) {
+            echo "Belum ada Data!";
+          }else{
+            $gbr = $gambar->tampil1Gambar($data['kode_barang']);
+          }
+          ?>
+  <div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-3">
+      <img src="/AWG/Gambar/<?php echo $gbr['foto'];?>" class="card-img h-100" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"> <?php echo $data['nama'];?></h5>
+        <p class="card-text"><?php echo $data['jumlah'];?>pc(s)</p>
+        <p class="card-text"><small class="text-muted"><?php echo $barang->rupiah($data['subtotal']);?></small></p>
+      </div>
+    </div>
+  </div>
+</div>
+<?php }}?>
             </div>
             </div>
         </div>
