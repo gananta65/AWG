@@ -1,4 +1,5 @@
 # AWG
+#a
 1. Harus terinstal xampp terlebih dahulu
   https://www.apachefriends.org/download.html
 3. Setelah selesai, buka aplikasi xampp
