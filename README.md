@@ -1,4 +1,14 @@
 # AWG
+Nama Anggota Kelompok
+
+Putu Ananda Andra Pratama (1901010052)
+
+Ni Luh Wawan Artha Sari   (1901010076)
+
+I Made Gananta            (2001010096)
+
+
+
 1. Harus terinstal xampp terlebih dahulu
   https://www.apachefriends.org/download.html
 3. Setelah selesai, buka aplikasi xampp
